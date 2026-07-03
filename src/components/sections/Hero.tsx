@@ -1,0 +1,152 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+import { ArrowDown, Sparkles } from "lucide-react";
+import { siteConfig, stats } from "@/lib/data";
+
+const PlanetaryLogo3D = dynamic(() => import("@/components/three/PlanetaryLogo3D"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="h-40 w-40 animate-pulse rounded-full bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-accent)]/20" />
+    </div>
+  ),
+});
+
+export function Hero() {
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const [show3d, setShow3d] = useState(true);
+
+  useEffect(() => {
+    const onResize = () => setShow3d(window.innerWidth >= 640);
+    onResize();
+    window.addEventListener("resize", onResize);
+
+    const onMove = (e: MouseEvent) => {
+      setMouse({
+        x: (e.clientX / window.innerWidth) * 2 - 1,
+        y: -(e.clientY / window.innerHeight) * 2 + 1,
+      });
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("mousemove", onMove);
+    };
+  }, []);
+
+  return (
+    <section
+      id="accueil"
+      className="relative flex min-h-screen flex-col items-center justify-start overflow-x-clip px-6 pt-20 pb-10 md:pt-24"
+      style={{ background: "var(--gradient-hero)" }}
+    >
+      <div className="relative z-10 mt-6 flex w-full max-w-6xl flex-col items-center text-center md:mt-10">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-4 flex items-center gap-2 rounded-full border border-[var(--color-primary)]/25 bg-[var(--color-secondary)]/30 px-4 py-2 text-sm text-[var(--color-text-muted)] backdrop-blur-md"
+        >
+          <Sparkles className="h-4 w-4 text-[var(--color-accent)]" />
+          Portfolio · {siteConfig.location}
+        </motion.div>
+
+        {show3d && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="relative mt-2 -mb-24 h-[min(85vw,640px)] w-[min(98vw,920px)] max-w-none overflow-visible md:-mb-28"
+          >
+            <PlanetaryLogo3D
+              mouse={mouse}
+              scale={1.35}
+              variant="hero"
+              className="h-full w-full"
+            />
+          </motion.div>
+        )}
+
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="hero-name relative z-10 mb-2 text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
+        >
+          {siteConfig.name}
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="font-display mb-4 text-lg tracking-wide text-white/90 md:text-xl"
+        >
+          {siteConfig.title}
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="mb-6 max-w-2xl text-base leading-relaxed text-[var(--color-text-muted)] md:text-lg"
+        >
+          {siteConfig.tagline}
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mb-8 flex flex-col items-center gap-4 sm:flex-row"
+        >
+          <a
+            href="#projets"
+            className="rounded-full bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-accent)] to-[var(--color-secondary)] px-8 py-4 text-sm font-semibold text-white animate-gradient shadow-[0_0_30px_rgba(62,63,240,0.35)] transition-shadow hover:shadow-[0_0_50px_rgba(255,0,229,0.35)]"
+          >
+            Voir mes projets
+          </a>
+          <a
+            href="#contact"
+            className="rounded-full border border-white/15 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:border-[var(--color-primary)]/40 hover:bg-white/5"
+          >
+            Me contacter
+          </a>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.45 }}
+          className="grid w-full max-w-lg grid-cols-3 gap-6"
+        >
+          {stats.map((stat) => (
+            <div key={stat.label} className="text-center">
+              <div className="font-display text-3xl font-bold text-gradient md:text-4xl">
+                {stat.value}
+              </div>
+              <div className="mt-1 text-xs text-[var(--color-text-muted)] sm:text-sm">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      <motion.a
+        href="#apropos"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 0.6 }}
+        className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2 text-[var(--color-text-muted)] transition-colors hover:text-white"
+        aria-label="Défiler vers le bas"
+      >
+        <ArrowDown className="h-6 w-6 animate-bounce" />
+      </motion.a>
+    </section>
+  );
+}

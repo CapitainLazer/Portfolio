@@ -1,0 +1,218 @@
+@import "tailwindcss";
+
+/* DX Sitrus — polices extraites de l'archive WordPress */
+@font-face {
+  font-family: "DX Sitrus";
+  src: url("/fonts/DxSitrus-Expanded.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DX Sitrus";
+  src: url("/fonts/DxSitrus-ExpandedItalic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* Palette inspirée de romaric-cathalifaud-portfolio.fr */
+  --color-primary: #3e3ff0;
+  --color-secondary: #201881;
+  --color-accent: #ff00e5;
+  --color-deep: #08057d;
+  --color-sky: #00d4ff;
+  --color-bg: #08051a;
+  --color-bg-elevated: #12082e;
+  --color-surface: rgba(255, 255, 255, 0.04);
+  --color-border: rgba(62, 63, 240, 0.15);
+  --color-text: #f0f0ff;
+  --color-text-muted: #b8b8dc;
+  --color-heading: #ffffff;
+  --shadow-heading: 0 2px 24px rgba(62, 63, 240, 0.35), 0 0 1px rgba(255, 255, 255, 0.8);
+  --shadow-hero-glow:
+    -3px 0 28px rgba(62, 63, 240, 0.75),
+    3px 0 28px rgba(255, 0, 229, 0.75),
+    0 0 48px rgba(0, 212, 255, 0.45),
+    0 0 72px rgba(32, 24, 129, 0.55),
+    0 4px 12px rgba(0, 0, 0, 0.45);
+  --gradient-main: linear-gradient(
+    135deg,
+    #3e3ff0 0%,
+    #ff00e5 50%,
+    #201881 100%
+  );
+  --gradient-hero: linear-gradient(
+    180deg,
+    rgba(32, 24, 129, 0.66) 0%,
+    rgba(32, 24, 129, 0) 100%
+  );
+  --gradient-subtle: linear-gradient(
+    135deg,
+    rgba(62, 63, 240, 0.15) 0%,
+    rgba(255, 0, 229, 0.08) 50%,
+    rgba(32, 24, 129, 0.15) 100%
+  );
+  --shadow-accent: 4px 6px 19px rgba(255, 0, 229, 0.45);
+}
+
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text);
+  --font-display: "DX Sitrus", var(--font-instrument-serif), Georgia, serif;
+  --font-body: var(--font-plus-jakarta), system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  overflow-x: clip;
+}
+
+main {
+  overflow-x: clip;
+}
+
+::selection {
+  background: rgba(255, 107, 157, 0.35);
+  color: #fff;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.text-heading {
+  color: var(--color-heading);
+  text-shadow: var(--shadow-heading);
+}
+
+/* Titre hero — dégradé sur tout le nom */
+.hero-name {
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(
+    90deg,
+    #00d4ff 0%,
+    #3e3ff0 22%,
+    #ffffff 48%,
+    #ff00e5 72%,
+    #c77dff 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 20px rgba(62, 63, 240, 0.4));
+}
+
+[data-theme="dev"] .hero-name {
+  background: linear-gradient(90deg, #00d4ff 0%, #3e3ff0 40%, #ffffff 60%, #6366f1 100%);
+  filter: drop-shadow(0 0 20px rgba(62, 63, 240, 0.45));
+}
+
+[data-theme="design"] .hero-name {
+  background: linear-gradient(90deg, #ff00e5 0%, #fb923c 35%, #ffffff 55%, #7c3aed 100%);
+  filter: drop-shadow(0 0 20px rgba(255, 0, 229, 0.4));
+}
+
+[data-theme="photo"] .hero-name {
+  background: linear-gradient(90deg, #38bdf8 0%, #7dd3fc 30%, #ffffff 50%, #4ade80 75%, #10b981 100%);
+  filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.45));
+}
+
+.text-gradient {
+  background: var(--gradient-main);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass {
+  background: var(--color-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border);
+}
+
+.glow-primary {
+  box-shadow: 0 0 40px rgba(77, 166, 255, 0.2);
+}
+
+.glow-accent {
+  box-shadow: 0 0 40px rgba(255, 107, 157, 0.25);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.perspective-3d {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--color-primary), var(--color-secondary));
+  border-radius: 3px;
+}
