@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { ArrowDown, Sparkles } from "lucide-react";
+import { CvDownloadButton } from "@/components/ui/CvDownloadButton";
 import { siteConfig, stats } from "@/lib/data";
 
 const PlanetaryLogo3D = dynamic(() => import("@/components/three/PlanetaryLogo3D"), {
@@ -41,12 +42,12 @@ export function Hero() {
   return (
     <section
       id="accueil"
-      className="relative flex min-h-screen flex-col items-center justify-start overflow-x-clip px-6 pt-20 pb-10 md:pt-24"
+      className="relative flex min-h-[100dvh] flex-col items-center justify-start overflow-x-clip px-4 pt-20 pb-20 sm:px-6 md:pt-24"
       style={{ background: "var(--gradient-hero)" }}
     >
       <div className="relative z-10 mt-6 flex w-full max-w-6xl flex-col items-center text-center md:mt-10">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="mb-4 flex items-center gap-2 rounded-full border border-[var(--color-primary)]/25 bg-[var(--color-secondary)]/30 px-4 py-2 text-sm text-[var(--color-text-muted)] backdrop-blur-md"
@@ -72,7 +73,7 @@ export function Hero() {
         )}
 
         <motion.h1
-          initial={{ opacity: 0, y: 24 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="hero-name relative z-10 mb-2 text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
@@ -81,7 +82,7 @@ export function Hero() {
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 24 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           className="font-display mb-4 text-lg tracking-wide text-white/90 md:text-xl"
@@ -90,7 +91,7 @@ export function Hero() {
         </motion.p>
 
         <motion.p
-          initial={{ opacity: 0, y: 24 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
           className="mb-6 max-w-2xl text-base leading-relaxed text-[var(--color-text-muted)] md:text-lg"
@@ -99,37 +100,38 @@ export function Hero() {
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mb-8 flex flex-col items-center gap-4 sm:flex-row"
+          className="mb-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4"
         >
           <a
             href="#projets"
-            className="rounded-full bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-accent)] to-[var(--color-secondary)] px-8 py-4 text-sm font-semibold text-white animate-gradient shadow-[0_0_30px_rgba(62,63,240,0.35)] transition-shadow hover:shadow-[0_0_50px_rgba(255,0,229,0.35)]"
+            className="w-full rounded-full bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-accent)] to-[var(--color-secondary)] px-8 py-4 text-center text-sm font-semibold text-white animate-gradient shadow-[0_0_30px_rgba(62,63,240,0.35)] transition-shadow hover:shadow-[0_0_50px_rgba(255,0,229,0.35)] sm:w-auto"
           >
             Voir mes projets
           </a>
+          <CvDownloadButton variant="outline" />
           <a
             href="#contact"
-            className="rounded-full border border-white/15 px-8 py-4 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:border-[var(--color-primary)]/40 hover:bg-white/5"
+            className="w-full rounded-full border border-white/15 px-8 py-4 text-center text-sm font-semibold text-white backdrop-blur-sm transition-all hover:border-[var(--color-primary)]/40 hover:bg-white/5 sm:w-auto"
           >
             Me contacter
           </a>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.45 }}
-          className="grid w-full max-w-lg grid-cols-3 gap-6"
+          className="grid w-full max-w-lg grid-cols-3 gap-2 sm:gap-6"
         >
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="font-display text-3xl font-bold text-gradient md:text-4xl">
+              <div className="font-display text-2xl font-bold text-gradient sm:text-3xl md:text-4xl">
                 {stat.value}
               </div>
-              <div className="mt-1 text-xs text-[var(--color-text-muted)] sm:text-sm">
+              <div className="mt-1 text-[10px] leading-tight text-[var(--color-text-muted)] sm:text-xs md:text-sm">
                 {stat.label}
               </div>
             </div>
@@ -142,7 +144,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.6 }}
-        className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2 text-[var(--color-text-muted)] transition-colors hover:text-white"
+        className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 text-[var(--color-text-muted)] transition-colors hover:text-white sm:block"
         aria-label="Défiler vers le bas"
       >
         <ArrowDown className="h-6 w-6 animate-bounce" />

@@ -23,12 +23,12 @@ const categoryColors: Record<ProjectCategory | "all", string> = {
 
 export function FilterTabs({ active, onChange }: FilterTabsProps) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {tabs.map((tab) => (
         <button
           key={tab.id}
           onClick={() => onChange(tab.id)}
-          className={`relative rounded-full px-5 py-2 text-sm font-medium transition-all duration-300 ${
+          className={`relative shrink-0 rounded-full px-5 py-2 text-sm font-medium transition-all duration-300 ${
             active === tab.id
               ? "text-white"
               : "text-[var(--color-text-muted)] hover:text-white"

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useMotionHidden, useIsMobileExperience } from "@/hooks/useMotionInitial";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { skills } from "@/lib/data";
 
@@ -12,6 +13,8 @@ const categoryLabels = {
 };
 
 export function Skills() {
+  const isMobile = useIsMobileExperience();
+  const motionInitial = useMotionHidden({ opacity: 0, y: 24 });
   const grouped = skills.reduce(
     (acc, skill) => {
       if (!acc[skill.category]) acc[skill.category] = [];
@@ -22,7 +25,7 @@ export function Skills() {
   );
 
   return (
-    <section className="px-6 py-28">
+    <section className="section-px px-4 py-20 sm:px-6 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           label="Compétences"
@@ -37,7 +40,7 @@ export function Skills() {
             return (
               <motion.div
                 key={category}
-                initial={{ opacity: 0, y: 24 }}
+                initial={motionInitial}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: groupIndex * 0.1 }}
@@ -54,13 +57,20 @@ export function Skills() {
                         <span className="font-medium text-white">{skill.level}%</span>
                       </div>
                       <div className="h-1.5 overflow-hidden rounded-full bg-white/5">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-                          className={`h-full rounded-full ${config.color}`}
-                        />
+                        {isMobile ? (
+                          <div
+                            className={`h-full rounded-full ${config.color}`}
+                            style={{ width: `${skill.level}%` }}
+                          />
+                        ) : (
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${skill.level}%` }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                            className={`h-full rounded-full ${config.color}`}
+                          />
+                        )}
                       </div>
                     </div>
                   ))}

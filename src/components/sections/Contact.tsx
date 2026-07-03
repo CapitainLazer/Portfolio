@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, Mail, MapPin, CheckCircle } from "lucide-react";
+import { useMotionHidden } from "@/hooks/useMotionInitial";
 import { SectionHeading, GlassCard } from "@/components/ui/SectionHeading";
 import {
   GitHubIcon,
@@ -35,6 +36,8 @@ const hoverStyles: Record<SocialLink["icon"], string> = {
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const motionFromLeft = useMotionHidden({ opacity: 0, x: -24 });
+  const motionFromRight = useMotionHidden({ opacity: 0, x: 24 });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,7 +46,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="px-6 py-28">
+    <section id="contact" className="section-px px-4 py-20 sm:px-6 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           label="Contact"
@@ -54,7 +57,7 @@ export function Contact() {
 
         <div className="grid gap-10 lg:grid-cols-5">
           <motion.div
-            initial={{ opacity: 0, x: -24 }}
+            initial={motionFromLeft}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="lg:col-span-2"
@@ -67,12 +70,12 @@ export function Contact() {
               <div className="mb-8 space-y-4">
                 <a
                   href={`mailto:${siteConfig.email}`}
-                  className="flex items-center gap-3 text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-accent)]"
+                  className="flex min-w-0 items-center gap-3 text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-accent)]"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--color-primary)]/10">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--color-primary)]/10">
                     <Mail className="h-5 w-5 text-[var(--color-primary)]" />
                   </div>
-                  {siteConfig.email}
+                  <span className="break-all text-sm sm:break-normal">{siteConfig.email}</span>
                 </a>
                 <div className="flex items-center gap-3 text-[var(--color-text-muted)]">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--color-secondary)]/10">
@@ -104,7 +107,7 @@ export function Contact() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 24 }}
+            initial={motionFromRight}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="lg:col-span-3"

@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useMotionHidden } from "@/hooks/useMotionInitial";
 import { Code2, Palette, Camera, ArrowUpRight } from "lucide-react";
 import { SectionHeading, GlassCard } from "@/components/ui/SectionHeading";
 import { Tilt3D } from "@/components/ui/Tilt3D";
@@ -49,8 +50,11 @@ const expertise = [
 ];
 
 export function About() {
+  const motionFromLeft = useMotionHidden({ opacity: 0, x: -30 });
+  const motionFromRight = useMotionHidden({ opacity: 0, x: 30 });
+
   return (
-    <section id="apropos" className="px-6 py-28">
+    <section id="apropos" className="section-px px-4 py-20 sm:px-6 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           label="À propos"
@@ -60,7 +64,7 @@ export function About() {
 
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={motionFromLeft}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
@@ -103,7 +107,7 @@ export function About() {
             {expertise.map((item, i) => (
               <motion.div
                 key={item.title}
-                initial={{ opacity: 0, x: 30 }}
+                initial={motionFromRight}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}

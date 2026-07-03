@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, type ReactNode, type MouseEvent } from "react";
+import { useIsMobileExperience } from "@/hooks/useMotionInitial";
 
 interface Tilt3DProps {
   children: ReactNode;
@@ -9,6 +10,7 @@ interface Tilt3DProps {
 }
 
 export function Tilt3D({ children, className = "", intensity = 10 }: Tilt3DProps) {
+  const isMobile = useIsMobileExperience();
   const ref = useRef<HTMLDivElement>(null);
   const [transform, setTransform] = useState(
     "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)"
@@ -40,6 +42,10 @@ export function Tilt3D({ children, className = "", intensity = 10 }: Tilt3DProps
     setGlare((g) => ({ ...g, opacity: 0 }));
   };
 
+  if (isMobile) {
+    return <div className={`relative ${className}`}>{children}</div>;
+  }
+
   return (
     <div
       ref={ref}
@@ -52,9 +58,9 @@ export function Tilt3D({ children, className = "", intensity = 10 }: Tilt3DProps
         transformStyle: "preserve-3d",
       }}
     >
-      {children}
+      <div className="relative z-[1]">{children}</div>
       <div
-        className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-300"
+        className="pointer-events-none absolute inset-0 z-0 rounded-2xl transition-opacity duration-300"
         style={{
           opacity: glare.opacity,
           background: `radial-gradient(circle at ${glare.x}% ${glare.y}%, rgba(255,255,255,0.12) 0%, transparent 60%)`,

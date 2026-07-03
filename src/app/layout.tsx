@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeScope } from "@/components/layout/ThemeScope";
+import { MotionProvider } from "@/components/layout/MotionProvider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 
@@ -29,9 +30,6 @@ export const metadata: Metadata = {
     "photographe",
     "créatif",
   ],
-  icons: {
-    icon: "/images/planetary-logo.png",
-  },
 };
 
 export default function RootLayout({
@@ -40,12 +38,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${instrumentSerif.variable} ${plusJakarta.variable} h-full`}>
+    <html
+      lang="fr"
+      data-scroll-behavior="smooth"
+      className={`${instrumentSerif.variable} ${plusJakarta.variable} h-full`}
+    >
       <body className="min-h-full antialiased">
         <ThemeScope>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
+          <MotionProvider>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+          </MotionProvider>
         </ThemeScope>
       </body>
     </html>

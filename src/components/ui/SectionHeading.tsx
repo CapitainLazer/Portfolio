@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
+import { useMotionHidden } from "@/hooks/useMotionInitial";
 
 interface SectionHeadingProps {
   label: string;
@@ -17,10 +18,11 @@ export function SectionHeading({
   align = "left",
 }: SectionHeadingProps) {
   const alignClass = align === "center" ? "text-center items-center" : "text-left items-start";
+  const motionInitial = useMotionHidden({ opacity: 0, y: 24 });
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={motionInitial}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.6 }}

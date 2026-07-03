@@ -7,7 +7,7 @@ import { ArrowUpRight } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { FilterTabs } from "@/components/ui/FilterTabs";
 import { ProjectCard } from "@/components/ui/ProjectCard";
-import { getHomeProjectsPreview, projects } from "@/lib/data";
+import { getHomePhotoProjects, getHomeProjectsPreview, projects } from "@/lib/data";
 import type { ProjectCategory } from "@/lib/types";
 
 export function Projects() {
@@ -15,11 +15,12 @@ export function Projects() {
 
   const filtered = useMemo(() => {
     if (filter === "all") return getHomeProjectsPreview();
+    if (filter === "photo") return getHomePhotoProjects();
     return projects.filter((p) => p.category === filter);
   }, [filter]);
 
   return (
-    <section id="projets" className="px-6 py-28">
+    <section id="projets" className="section-px px-4 py-20 sm:px-6 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           label="Projets"
@@ -27,7 +28,9 @@ export function Projects() {
           description={
             filter === "all"
               ? "Un aperçu de mon travail — 2 projets par domaine. Filtrez ou explorez chaque page pour voir l'ensemble."
-              : "Un aperçu de mon travail en développement, design et photographie."
+              : filter === "photo"
+                ? "6 clichés en avant-première — la galerie complète est sur la page Photo."
+                : "Un aperçu de mon travail en développement, design et photographie."
           }
         />
 
@@ -42,6 +45,22 @@ export function Projects() {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {filter === "photo" && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-12 flex justify-center"
+          >
+            <Link
+              href="/photo"
+              className="inline-flex items-center gap-1.5 text-sm text-[var(--color-text-muted)] transition-colors hover:text-[#38bdf8]"
+            >
+              Voir toutes les photos
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </motion.div>
+        )}
 
         {filter === "all" && (
           <motion.div

@@ -17,6 +17,10 @@ export const siteConfig = {
   domain: "romaric-cathalifaud-portfolio.fr",
   github: `https://github.com/${GITHUB_USER}`,
   gitlab: "https://gitlab.com/CapitainLazer",
+  cv: {
+    href: "/cv/romaric-cathalifaud-cv.pdf",
+    filename: "Romaric-Cathalifaud-CV.pdf",
+  },
 };
 
 export const navLinks = [
@@ -24,6 +28,7 @@ export const navLinks = [
   { href: "/dev", label: "Dev" },
   { href: "/design", label: "Design" },
   { href: "/photo", label: "Photo" },
+  { href: "/cv", label: "CV" },
   { href: "/#contact", label: "Contact" },
 ];
 
@@ -184,6 +189,14 @@ export function getProjectsByCategory(category: ProjectCategory): Project[] {
   return projects.filter((p) => p.category === category);
 }
 
+export const HOME_PHOTO_LIMIT = 6;
+
+function sortProjectsForHome(a: Project, b: Project): number {
+  if (a.featured && !b.featured) return -1;
+  if (!a.featured && b.featured) return 1;
+  return b.year - a.year;
+}
+
 /** Aperçu accueil — 2 projets max par domaine pour l'onglet « Tous » */
 export function getHomeProjectsPreview(perCategory = 2): Project[] {
   const categories: ProjectCategory[] = ["dev", "design", "photo"];
@@ -191,22 +204,28 @@ export function getHomeProjectsPreview(perCategory = 2): Project[] {
   return categories.flatMap((category) =>
     projects
       .filter((p) => p.category === category)
-      .sort((a, b) => {
-        if (a.featured && !b.featured) return -1;
-        if (!a.featured && b.featured) return 1;
-        return b.year - a.year;
-      })
+      .sort(sortProjectsForHome)
       .slice(0, perCategory)
   );
+}
+
+/** Photos sur l'accueil — galerie et filtre Photo */
+export function getHomePhotoProjects(limit = HOME_PHOTO_LIMIT): Project[] {
+  return projects
+    .filter((p) => p.category === "photo")
+    .sort(sortProjectsForHome)
+    .slice(0, limit);
 }
 
 export function getSkillsByCategory(category: ProjectCategory): Skill[] {
   return skills.filter((s) => s.category === category);
 }
 
-export const galleryImages = projects
-  .filter((p) => p.category === "photo")
-  .map((p) => ({ id: p.id, src: p.image, alt: p.title }));
+export const galleryImages = getHomePhotoProjects().map((p) => ({
+  id: p.id,
+  src: p.image,
+  alt: p.title,
+}));
 
 export const skills: Skill[] = [
   { name: "React / Next.js", level: 90, category: "dev" },

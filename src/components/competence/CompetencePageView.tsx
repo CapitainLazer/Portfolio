@@ -1,10 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectCard } from "@/components/ui/ProjectCard";
+import { PhotoLightbox } from "@/components/ui/PhotoLightbox";
+import { PhotoZoomTrigger } from "@/components/ui/PhotoZoomTrigger";
+import { useMotionHidden } from "@/hooks/useMotionInitial";
 import type { CompetencePage } from "@/lib/themes";
 import type { Project, Skill } from "@/lib/types";
 
@@ -15,10 +19,16 @@ interface CompetencePageViewProps {
 }
 
 export function CompetencePageView({ page, projects, skills }: CompetencePageViewProps) {
+  const [selectedPhotoId, setSelectedPhotoId] = useState<string | null>(null);
+  const selectedPhoto = projects.find((p) => p.id === selectedPhotoId);
+  const motionInitial = useMotionHidden({ opacity: 0, y: 20 });
+  const motionToolsInitial = useMotionHidden({ opacity: 0, y: 16 });
+  const motionGalleryInitial = useMotionHidden({ opacity: 0, y: 16 });
+
   return (
     <>
       <section
-        className="relative overflow-x-clip px-6 pt-28 pb-16 md:pt-32"
+        className="relative overflow-x-clip px-4 pt-28 pb-16 sm:px-6 md:pt-32"
         style={{ background: "var(--gradient-hero)" }}
       >
         <div className="mx-auto max-w-6xl">
@@ -31,7 +41,7 @@ export function CompetencePageView({ page, projects, skills }: CompetencePageVie
           </Link>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={motionInitial}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
@@ -50,7 +60,7 @@ export function CompetencePageView({ page, projects, skills }: CompetencePageVie
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={motionToolsInitial}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
             className="mt-8 flex flex-wrap gap-3"
@@ -67,57 +77,77 @@ export function CompetencePageView({ page, projects, skills }: CompetencePageVie
         </div>
       </section>
 
-      <section className="px-6 py-20">
+      <section className="section-px px-4 py-16 sm:px-6 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <SectionHeading
-            label="Projets"
-            title={`Réalisations ${page.label.toLowerCase()}`}
-            description={`${projects.length} projet${projects.length > 1 ? "s" : ""} sélectionné${projects.length > 1 ? "s" : ""}.`}
-          />
-          {projects.length > 0 ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.map((project, index) => (
-                <ProjectCard key={project.id} project={project} index={index} />
-              ))}
-            </div>
+          {page.category === "photo" ? (
+            <>
+              <SectionHeading
+                label="Galerie"
+                title="Sélection photographique"
+                description={`${projects.length} cliché${projects.length > 1 ? "s" : ""} — portraits, street et paysages.`}
+              />
+              {projects.length > 0 ? (
+                <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+                  {projects.map((project, index) => (
+                    <motion.div
+                      key={project.id}
+                      initial={motionGalleryInitial}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: Math.min(index * 0.03, 0.3) }}
+                      className="mb-4 break-inside-avoid"
+                    >
+                      <PhotoZoomTrigger
+                        onZoom={() => setSelectedPhotoId(project.id)}
+                        className="rounded-2xl"
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          loading={index < 6 ? "eager" : "lazy"}
+                          decoding="async"
+                          className="w-full rounded-2xl object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                        />
+                      </PhotoZoomTrigger>
+                    </motion.div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[var(--color-text-muted)]">Photos à venir.</p>
+              )}
+            </>
           ) : (
-            <p className="text-[var(--color-text-muted)]">Projets à venir.</p>
+            <>
+              <SectionHeading
+                label="Projets"
+                title={`Réalisations ${page.label.toLowerCase()}`}
+                description={`${projects.length} projet${projects.length > 1 ? "s" : ""} sélectionné${projects.length > 1 ? "s" : ""}.`}
+              />
+              {projects.length > 0 ? (
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {projects.map((project, index) => (
+                    <ProjectCard key={project.id} project={project} index={index} />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[var(--color-text-muted)]">Projets à venir.</p>
+              )}
+            </>
           )}
         </div>
       </section>
 
-      {page.category === "photo" && projects.length > 0 && (
-        <section className="px-6 pb-20">
-          <div className="mx-auto max-w-6xl">
-            <SectionHeading
-              label="Galerie"
-              title="Sélection visuelle"
-              align="center"
-            />
-            <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
-              {projects.map((project, index) => (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.08 }}
-                  className="mb-4 break-inside-avoid overflow-hidden rounded-2xl"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full rounded-2xl object-cover transition-transform duration-500 hover:scale-[1.02]"
-                  />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+      {selectedPhoto && (
+        <PhotoLightbox
+          src={selectedPhoto.image}
+          alt={selectedPhoto.title}
+          open={!!selectedPhoto}
+          onClose={() => setSelectedPhotoId(null)}
+        />
       )}
 
-      <section className="px-6 py-20">
+      <section className="section-px px-4 py-16 sm:px-6 sm:py-20">
         <div className="mx-auto max-w-3xl">
           <SectionHeading
             label="Compétences"
