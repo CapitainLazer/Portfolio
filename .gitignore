@@ -27,6 +27,13 @@
 # local archives / backups
 /Docs-annex/
 
+# Sources photo brutes (JPG/PNG) — locales uniquement.
+# Seules les WebP optimisées + filigrane dans public/images/photo/web/ sont versionnées.
+/public/images/photo/*
+!/public/images/photo/.gitkeep
+!/public/images/photo/web/
+!/public/images/photo/web/**
+
 # debug
 npm-debug.log*
 yarn-debug.log*

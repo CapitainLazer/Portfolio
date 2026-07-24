@@ -70,17 +70,18 @@ Quand le DNS du domaine perso est prêt : retirer `NEXT_PUBLIC_BASE_PATH`, remet
 
 ## Photos
 
-Les photos sont gérées automatiquement — **ne pas éditer `src/lib/photos.ts` à la main**.
+Les **sources JPG/PNG** restent locales (`public/images/photo/`) et **ne sont pas versionnées**.  
+Seul le dossier `public/images/photo/web/` (WebP optimisées + filigrane) est poussé sur le dépôt.
 
 1. Déposer les JPG/PNG dans `public/images/photo/`
 2. Lancer `npm run optimize-photos`
-3. Relancer `npm run dev` ou `npm run build`
+3. Committer uniquement les WebP générées (+ le manifeste)
 
 ```
 public/images/photo/
-├── ma-photo.jpg          # sources
+├── ma-photo.jpg          # source locale (gitignored)
 └── web/
-    └── ma-photo.webp     # versions servies
+    └── ma-photo.webp     # version servie / versionnée
 ```
 
 `npm run build` exécute `sync-photos` avant la compilation.
