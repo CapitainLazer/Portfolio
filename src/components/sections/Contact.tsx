@@ -76,7 +76,7 @@ export function Contact() {
     if (!accessKey) {
       setStatus("error");
       setErrorMessage(
-        "Formulaire non configuré. Ajoute NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY (voir README)."
+        "Formulaire non configuré pour le moment. Réessaie plus tard."
       );
       return;
     }

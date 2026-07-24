@@ -32,8 +32,8 @@ jobs:
 
       - name: Build static site
         env:
-          # Domaine perso (CNAME). Sans DNS encore : utilise temporairement
-          # https://CapitainLazer.github.io/Portfolio-v2 et NEXT_PUBLIC_BASE_PATH=/Portfolio-v2
+          # Domaine perso (CNAME). Sans DNS : https://CapitainLazer.github.io/Portfolio
+          # + NEXT_PUBLIC_BASE_PATH=/Portfolio
           NEXT_PUBLIC_SITE_URL: https://romaric-cathalifaud-portfolio.fr
           NEXT_PUBLIC_BASE_PATH: ""
           NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.WEB3FORMS_ACCESS_KEY }}
