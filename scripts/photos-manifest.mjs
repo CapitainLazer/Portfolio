@@ -35,35 +35,67 @@ export function listSourcePhotos() {
     .sort((a, b) => a.localeCompare(b, "fr"));
 }
 
+export function listWebpPhotos() {
+  if (!fs.existsSync(OUTPUT_DIR)) return [];
+
+  return fs
+    .readdirSync(OUTPUT_DIR)
+    .filter((file) => file.toLowerCase().endsWith(".webp"))
+    .sort((a, b) => a.localeCompare(b, "fr"));
+}
+
 export function buildManifestEntries(results = []) {
   const resultBySource = new Map(results.map((entry) => [entry.filename, entry]));
   const sources = listSourcePhotos();
 
-  return sources
-    .map((source) => {
-      const webp = toWebpName(source);
-      const webpPath = path.join(OUTPUT_DIR, webp);
-      if (!fs.existsSync(webpPath)) return null;
+  // Avec sources locales : le manifeste suit les JPG/PNG
+  if (sources.length > 0) {
+    return sources
+      .map((source) => {
+        const webp = toWebpName(source);
+        const webpPath = path.join(OUTPUT_DIR, webp);
+        if (!fs.existsSync(webpPath)) return null;
 
-      const optimized = resultBySource.get(source);
-      const stats = optimized ?? fs.statSync(webpPath);
+        const optimized = resultBySource.get(source);
+        const stats = optimized ?? fs.statSync(webpPath);
 
-      return {
-        id: toPhotoId(source),
-        source,
-        webp,
-        width: optimized?.width ?? null,
-        height: optimized?.height ?? null,
-        bytes: optimized?.outputSize ?? stats.size,
-      };
-    })
-    .filter(Boolean);
+        return {
+          id: toPhotoId(source),
+          source,
+          webp,
+          width: optimized?.width ?? null,
+          height: optimized?.height ?? null,
+          bytes: optimized?.outputSize ?? stats.size,
+        };
+      })
+      .filter(Boolean);
+  }
+
+  // CI / dépôt public (pas de JPG) : manifeste depuis les WebP versionnées
+  return listWebpPhotos().map((webp) => {
+    const webpPath = path.join(OUTPUT_DIR, webp);
+    const stats = fs.statSync(webpPath);
+    const id = webp.replace(/\.webp$/i, "");
+
+    return {
+      id,
+      source: webp,
+      webp,
+      width: null,
+      height: null,
+      bytes: stats.size,
+    };
+  });
 }
 
 export function removeOrphanWebpFiles() {
+  const sources = listSourcePhotos();
+
+  // Sans sources : ne jamais supprimer les WebP versionnées (build CI)
+  if (sources.length === 0) return [];
   if (!fs.existsSync(OUTPUT_DIR)) return [];
 
-  const validWebp = new Set(listSourcePhotos().map(toWebpName));
+  const validWebp = new Set(sources.map(toWebpName));
   const removed = [];
 
   for (const file of fs.readdirSync(OUTPUT_DIR)) {
