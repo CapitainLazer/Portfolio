@@ -61,10 +61,12 @@ Le workflow `.github/workflows/deploy-pages.yml` construit et publie le dossier 
 2. Configurer le secret `WEB3FORMS_ACCESS_KEY` si le formulaire doit fonctionner en prod
 3. Domaine perso optionnel via `public/CNAME` + DNS chez le registrar
 
-Sans domaine perso pour l’instant :
+Sans domaine perso pour l’instant (cas actuel) :
 
 - URL : `https://CapitainLazer.github.io/Portfolio/`
-- Dans le workflow : `NEXT_PUBLIC_SITE_URL=https://CapitainLazer.github.io/Portfolio` et `NEXT_PUBLIC_BASE_PATH=/Portfolio`
+- Le workflow utilise déjà `NEXT_PUBLIC_BASE_PATH=/Portfolio` (obligatoire pour le CSS/JS)
+
+Quand le DNS du domaine perso est prêt : retirer `NEXT_PUBLIC_BASE_PATH`, remettre `NEXT_PUBLIC_SITE_URL` sur le domaine, et ajouter `public/CNAME` avec le nom de domaine.
 
 ## Photos
 

@@ -32,10 +32,11 @@ jobs:
 
       - name: Build static site
         env:
-          # Domaine perso (CNAME). Sans DNS : https://CapitainLazer.github.io/Portfolio
-          # + NEXT_PUBLIC_BASE_PATH=/Portfolio
-          NEXT_PUBLIC_SITE_URL: https://romaric-cathalifaud-portfolio.fr
-          NEXT_PUBLIC_BASE_PATH: ""
+          # Site projet GitHub Pages : https://CapitainLazer.github.io/Portfolio/
+          # Quand le domaine perso DNS est prêt : SITE_URL=https://romaric-cathalifaud-portfolio.fr
+          # et BASE_PATH vide ("").
+          NEXT_PUBLIC_SITE_URL: https://CapitainLazer.github.io/Portfolio
+          NEXT_PUBLIC_BASE_PATH: /Portfolio
           NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.WEB3FORMS_ACCESS_KEY }}
         run: npm run build
 
