@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { navLinks, siteConfig } from "@/lib/data";
+import { withBasePath } from "@/lib/paths";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -71,7 +72,7 @@ export function Navbar() {
           >
             <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--color-primary)]/30 via-[var(--color-secondary)]/40 to-[var(--color-accent)]/20 p-1.5 shadow-[0_0_24px_color-mix(in_srgb,var(--color-primary)_45%,transparent)] ring-1 ring-white/20 transition-all duration-300 group-hover:shadow-[0_0_32px_color-mix(in_srgb,var(--color-accent)_40%,transparent)] sm:h-11 sm:w-11">
               <Image
-                src="/images/planetary-logo.png"
+                src={withBasePath("/images/planetary-logo.png")}
                 alt="Logo planétaire"
                 width={40}
                 height={40}

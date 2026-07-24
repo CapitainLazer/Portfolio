@@ -1,5 +1,6 @@
 import type { Project, ProjectCategory, Skill, SocialLink } from "./types";
 import { photoProjects } from "./photos";
+import { withBasePath } from "./paths";
 
 const GITHUB_USER = "CapitainLazer";
 
@@ -181,7 +182,7 @@ const devAndDesignProjects: Project[] = [
     category: "design",
     tags: ["Figma", "Design Tokens", "Next.js", "Branding"],
     year: 2026,
-    image: "/images/planetary-logo.png",
+    image: withBasePath("/images/planetary-logo.png"),
     link: "https://github.com/CapitainLazer",
     featured: true,
   },

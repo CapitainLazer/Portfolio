@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/data";
 import { absoluteUrl } from "@/lib/seo";
+import { withBasePath } from "@/lib/paths";
 
 export const dynamic = "force-static";
 
@@ -18,7 +19,7 @@ export default function manifest(): MetadataRoute.Manifest {
     orientation: "portrait-primary",
     icons: [
       {
-        src: "/images/planetary-logo.png",
+        src: withBasePath("/images/planetary-logo.png"),
         sizes: "512x512",
         type: "image/png",
         purpose: "any",

@@ -1,5 +1,6 @@
 import type { Project } from "./types";
 import manifest from "./photos.manifest.json";
+import { withBasePath } from "./paths";
 
 const PHOTO_DIR = "/images/photo/web";
 
@@ -41,7 +42,7 @@ function photoEntry(item: PhotoManifestItem, index: number): Project {
     category: "photo",
     tags: inferTags(item.source),
     year: inferYear(item.source),
-    image: `${PHOTO_DIR}/${encodeURIComponent(item.webp)}`,
+    image: withBasePath(`${PHOTO_DIR}/${encodeURIComponent(item.webp)}`),
     featured: index <= 3,
   };
 }
