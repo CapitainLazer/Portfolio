@@ -1,14 +1,16 @@
-import type { Metadata } from "next";
 import { CompetencePageView } from "@/components/competence/CompetencePageView";
 import { competencePages } from "@/lib/themes";
 import { getProjectsByCategory, getSkillsByCategory } from "@/lib/data";
+import { createPageMetadata } from "@/lib/seo";
 
 const page = competencePages.photo;
 
-export const metadata: Metadata = {
-  title: `${page.label} — Romaric Cathalifaud`,
+export const metadata = createPageMetadata({
+  title: page.label,
   description: page.description,
-};
+  path: page.path,
+  keywords: ["photographie", "portrait", "street photography", "paysage", "galerie photo"],
+});
 
 export default function PhotoPage() {
   return (

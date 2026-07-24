@@ -63,9 +63,13 @@ export function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${headerSurface}`}
       >
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Link href="/" className="group flex items-center gap-3" onClick={() => setMobileOpen(false)}>
-            <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--color-primary)]/30 via-[var(--color-secondary)]/40 to-[var(--color-accent)]/20 p-1.5 shadow-[0_0_24px_color-mix(in_srgb,var(--color-primary)_45%,transparent)] ring-1 ring-white/20 transition-all duration-300 group-hover:shadow-[0_0_32px_color-mix(in_srgb,var(--color-accent)_40%,transparent)]">
+        <nav className="mx-auto flex max-w-6xl items-center gap-3 px-4 sm:px-6">
+          <Link
+            href="/"
+            className="group flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3"
+            onClick={() => setMobileOpen(false)}
+          >
+            <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--color-primary)]/30 via-[var(--color-secondary)]/40 to-[var(--color-accent)]/20 p-1.5 shadow-[0_0_24px_color-mix(in_srgb,var(--color-primary)_45%,transparent)] ring-1 ring-white/20 transition-all duration-300 group-hover:shadow-[0_0_32px_color-mix(in_srgb,var(--color-accent)_40%,transparent)] sm:h-11 sm:w-11">
               <Image
                 src="/images/planetary-logo.png"
                 alt="Logo planétaire"
@@ -74,7 +78,7 @@ export function Navbar() {
                 className="h-full w-full object-contain brightness-125 contrast-110 drop-shadow-[0_0_6px_var(--color-sky)]"
               />
             </div>
-            <span className="hidden text-sm font-semibold tracking-tight text-white sm:block">
+            <span className="truncate text-sm font-semibold tracking-tight text-white">
               {siteConfig.name.split(" ")[0]}
             </span>
           </Link>
@@ -97,8 +101,9 @@ export function Navbar() {
           </ul>
 
           <button
+            type="button"
             onClick={() => setMobileOpen(!mobileOpen)}
-            className={`rounded-xl p-2.5 transition-colors md:hidden ${
+            className={`shrink-0 rounded-xl p-2.5 transition-colors md:hidden ${
               mobileOpen
                 ? "bg-[var(--color-primary)]/20 text-white ring-1 ring-[var(--color-primary)]/40"
                 : "text-white hover:bg-white/10"

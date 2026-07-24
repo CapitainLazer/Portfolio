@@ -1,5 +1,6 @@
-import { Download } from "lucide-react";
-import { siteConfig } from "@/lib/data";
+"use client";
+
+import { Printer } from "lucide-react";
 
 type CvDownloadButtonProps = {
   variant?: "primary" | "outline" | "ghost";
@@ -21,12 +22,11 @@ export function CvDownloadButton({
 }: CvDownloadButtonProps) {
   return (
     <a
-      href={siteConfig.cv.href}
-      download={siteConfig.cv.filename}
+      href="/cv"
       className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-semibold transition-all sm:w-auto ${variants[variant]} ${className}`}
     >
-      <Download className="h-4 w-4" />
-      Télécharger mon CV
+      <Printer className="h-4 w-4" />
+      Voir mon CV
     </a>
   );
 }

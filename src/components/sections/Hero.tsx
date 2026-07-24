@@ -18,12 +18,14 @@ const PlanetaryLogo3D = dynamic(() => import("@/components/three/PlanetaryLogo3D
 
 export function Hero() {
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const [show3d, setShow3d] = useState(true);
+  // false par défaut : évite un flash 3D + marge négative sur mobile
+  const [show3d, setShow3d] = useState(false);
 
   useEffect(() => {
-    const onResize = () => setShow3d(window.innerWidth >= 640);
-    onResize();
-    window.addEventListener("resize", onResize);
+    const mq = window.matchMedia("(min-width: 640px)");
+    const sync3d = () => setShow3d(mq.matches);
+    sync3d();
+    mq.addEventListener("change", sync3d);
 
     const onMove = (e: MouseEvent) => {
       setMouse({
@@ -34,7 +36,7 @@ export function Hero() {
     window.addEventListener("mousemove", onMove, { passive: true });
 
     return () => {
-      window.removeEventListener("resize", onResize);
+      mq.removeEventListener("change", sync3d);
       window.removeEventListener("mousemove", onMove);
     };
   }, []);
@@ -42,17 +44,17 @@ export function Hero() {
   return (
     <section
       id="accueil"
-      className="relative flex min-h-[100dvh] flex-col items-center justify-start overflow-x-clip px-4 pt-20 pb-20 sm:px-6 md:pt-24"
+      className="relative flex flex-col items-center justify-start overflow-x-clip px-4 pb-12 pt-28 sm:px-6 sm:pb-16 sm:pt-32 md:min-h-[100dvh] md:pb-20 md:pt-28"
       style={{ background: "var(--gradient-hero)" }}
     >
-      <div className="relative z-10 mt-6 flex w-full max-w-6xl flex-col items-center text-center md:mt-10">
+      <div className="relative z-10 flex w-full max-w-6xl flex-col items-center text-center md:mt-4">
         <motion.div
           initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="mb-4 flex items-center gap-2 rounded-full border border-[var(--color-primary)]/25 bg-[var(--color-secondary)]/30 px-4 py-2 text-sm text-[var(--color-text-muted)] backdrop-blur-md"
         >
-          <Sparkles className="h-4 w-4 text-[var(--color-accent)]" />
+          <Sparkles className="h-4 w-4 shrink-0 text-[var(--color-accent)]" />
           Portfolio · {siteConfig.location}
         </motion.div>
 
@@ -61,7 +63,7 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="relative mt-2 -mb-24 h-[min(85vw,640px)] w-[min(98vw,920px)] max-w-none overflow-visible md:-mb-28"
+            className="relative mt-2 -mb-24 hidden h-[min(85vw,640px)] w-[min(98vw,920px)] max-w-none overflow-visible sm:block md:-mb-28"
           >
             <PlanetaryLogo3D
               mouse={mouse}
@@ -76,7 +78,7 @@ export function Hero() {
           initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="hero-name relative z-10 mb-2 text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
+          className="hero-name relative z-10 mb-3 max-w-[min(100%,22ch)] px-1 text-4xl sm:max-w-none sm:text-5xl md:text-6xl lg:text-7xl"
         >
           {siteConfig.name}
         </motion.h1>
@@ -85,7 +87,7 @@ export function Hero() {
           initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="font-display mb-4 text-lg tracking-wide text-white/90 md:text-xl"
+          className="font-display mb-4 text-base tracking-wide text-white/90 sm:text-lg md:text-xl"
         >
           {siteConfig.title}
         </motion.p>
@@ -94,7 +96,7 @@ export function Hero() {
           initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.35 }}
-          className="mb-6 max-w-2xl text-base leading-relaxed text-[var(--color-text-muted)] md:text-lg"
+          className="mb-6 max-w-2xl px-1 text-sm leading-relaxed text-[var(--color-text-muted)] sm:text-base md:text-lg"
         >
           {siteConfig.tagline}
         </motion.p>
@@ -124,14 +126,14 @@ export function Hero() {
           initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.45 }}
-          className="grid w-full max-w-lg grid-cols-3 gap-2 sm:gap-6"
+          className="grid w-full max-w-lg grid-cols-3 gap-3 sm:gap-6"
         >
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="font-display text-2xl font-bold text-gradient sm:text-3xl md:text-4xl">
                 {stat.value}
               </div>
-              <div className="mt-1 text-[10px] leading-tight text-[var(--color-text-muted)] sm:text-xs md:text-sm">
+              <div className="mt-1 text-[10px] leading-snug text-[var(--color-text-muted)] sm:text-xs md:text-sm">
                 {stat.label}
               </div>
             </div>
@@ -144,10 +146,10 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.6 }}
-        className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 text-[var(--color-text-muted)] transition-colors hover:text-white sm:block"
+        className="mt-10 text-[var(--color-text-muted)] transition-colors hover:text-white md:absolute md:bottom-6 md:left-1/2 md:mt-0 md:-translate-x-1/2"
         aria-label="Défiler vers le bas"
       >
-        <ArrowDown className="h-6 w-6 animate-bounce" />
+        <ArrowDown className="mx-auto h-6 w-6 animate-bounce" />
       </motion.a>
     </section>
   );

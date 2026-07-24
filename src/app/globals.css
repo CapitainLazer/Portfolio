@@ -76,9 +76,9 @@ html {
 
 @media (max-width: 767px) {
   .hero-name {
-    font-size: clamp(1.85rem, 8.5vw, 2.75rem);
-    line-height: 1.15;
-    overflow-wrap: anywhere;
+    font-size: clamp(1.65rem, 7.5vw, 2.35rem);
+    line-height: 1.2;
+    overflow-wrap: break-word;
     text-wrap: balance;
   }
 
@@ -160,6 +160,26 @@ main {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--color-border);
+}
+
+/* Champs formulaire sur fond sombre (évite texte invisible après autofill) */
+.form-field {
+  color: #fff;
+  caret-color: #fff;
+  color-scheme: dark;
+}
+
+.form-field::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.form-field:-webkit-autofill,
+.form-field:-webkit-autofill:hover,
+.form-field:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fff;
+  caret-color: #fff;
+  transition: background-color 99999s ease-in-out 0s;
+  box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.06) inset;
 }
 
 .glow-primary {

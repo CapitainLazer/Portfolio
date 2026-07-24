@@ -5,6 +5,8 @@ import { ThemeScope } from "@/components/layout/ThemeScope";
 import { MotionProvider } from "@/components/layout/MotionProvider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { rootMetadata } from "@/lib/seo";
 
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
@@ -18,19 +20,7 @@ const plusJakarta = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700"],
 });
 
-export const metadata: Metadata = {
-  title: "Romaric Cathalifaud — Dev · Design · Photo",
-  description:
-    "Portfolio de Romaric Cathalifaud : développement web, design graphique et photographie. Projets créatifs et expériences interactives.",
-  keywords: [
-    "Romaric Cathalifaud",
-    "portfolio",
-    "développeur",
-    "designer",
-    "photographe",
-    "créatif",
-  ],
-};
+export const metadata: Metadata = rootMetadata;
 
 export default function RootLayout({
   children,
@@ -44,6 +34,7 @@ export default function RootLayout({
       className={`${instrumentSerif.variable} ${plusJakarta.variable} h-full`}
     >
       <body className="min-h-full antialiased">
+        <JsonLd />
         <ThemeScope>
           <MotionProvider>
             <Navbar />

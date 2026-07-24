@@ -12,7 +12,7 @@ export function GradientBackground({
   orb3 = "#201881",
 }: GradientBackgroundProps) {
   return (
-    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div className="site-gradient-bg pointer-events-none fixed inset-0 -z-10 overflow-hidden">
       <div
         className="absolute -left-1/4 -top-1/4 h-[600px] w-[600px] rounded-full opacity-30 blur-[120px] animate-pulse-glow"
         style={{ background: `radial-gradient(circle, ${orb1} 0%, transparent 70%)` }}

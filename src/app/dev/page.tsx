@@ -1,14 +1,16 @@
-import type { Metadata } from "next";
 import { CompetencePageView } from "@/components/competence/CompetencePageView";
 import { competencePages } from "@/lib/themes";
 import { getProjectsByCategory, getSkillsByCategory } from "@/lib/data";
+import { createPageMetadata } from "@/lib/seo";
 
 const page = competencePages.dev;
 
-export const metadata: Metadata = {
-  title: `${page.label} — Romaric Cathalifaud`,
+export const metadata = createPageMetadata({
+  title: page.label,
   description: page.description,
-};
+  path: page.path,
+  keywords: ["développeur web", "React", "Next.js", "Three.js", "projets GitHub"],
+});
 
 export default function DevPage() {
   return (

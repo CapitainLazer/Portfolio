@@ -12,13 +12,12 @@ export const siteConfig = {
   title: "Développeur · Designer · Photographe",
   tagline:
     "Portfolio créatif — développement web, design graphique et photographie. Je transforme des idées en expériences visuelles et interactives.",
-  email: "contact@romaric-cathalifaud-portfolio.fr",
   location: "France",
   domain: "romaric-cathalifaud-portfolio.fr",
   github: `https://github.com/${GITHUB_USER}`,
   gitlab: "https://gitlab.com/CapitainLazer",
   cv: {
-    href: "/cv/romaric-cathalifaud-cv.pdf",
+    href: "/cv",
     filename: "Romaric-Cathalifaud-CV.pdf",
   },
 };
@@ -30,6 +29,11 @@ export const navLinks = [
   { href: "/photo", label: "Photo" },
   { href: "/cv", label: "CV" },
   { href: "/#contact", label: "Contact" },
+];
+
+export const legalLinks = [
+  { href: "/mentions-legales", label: "Mentions légales" },
+  { href: "/politique-de-confidentialite", label: "Politique de confidentialité" },
 ];
 
 const devAndDesignProjects: Project[] = [
@@ -253,7 +257,6 @@ export const socialLinks: SocialLink[] = [
     href: "https://www.instagram.com/romaric_cathalifaud/",
     icon: "instagram",
   },
-  { label: "Email", href: `mailto:${siteConfig.email}`, icon: "mail" },
 ];
 
 export const stats = [

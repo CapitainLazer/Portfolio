@@ -1,0 +1,546 @@
+/* CV document — écran + impression A4 (1 page) */
+
+.cv-document {
+  --cv-primary: #3e3ff0;
+  --cv-secondary: #201881;
+  --cv-accent: #c026d3;
+  --cv-sky: #0284c7;
+  --cv-text: #f0f0ff;
+  --cv-muted: #b8b8dc;
+  --cv-bg: #12082e;
+  --cv-surface: rgba(255, 255, 255, 0.04);
+
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 52rem;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid rgba(62, 63, 240, 0.2);
+  background: var(--cv-bg);
+  box-shadow: 0 24px 80px rgba(8, 5, 26, 0.55);
+  color: var(--cv-text);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.cv-header {
+  position: relative;
+  border-bottom: 1px solid rgba(62, 63, 240, 0.25);
+  padding: 1.25rem 1.5rem 1.125rem;
+}
+
+@media (min-width: 640px) {
+  .cv-header {
+    padding: 1.5rem 2rem 1.25rem;
+  }
+}
+
+.cv-header-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.45;
+  background: linear-gradient(
+    135deg,
+    rgba(62, 63, 240, 0.35) 0%,
+    rgba(255, 0, 229, 0.12) 50%,
+    rgba(0, 212, 255, 0.1) 100%
+  );
+  pointer-events: none;
+}
+
+.cv-header-inner {
+  position: relative;
+}
+
+.cv-kicker {
+  margin-bottom: 0.5rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ff00e5;
+}
+
+.cv-name {
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+  line-height: 1.1;
+  color: #fff;
+}
+
+@media (min-width: 640px) {
+  .cv-name {
+    font-size: 2rem;
+  }
+}
+
+.cv-title {
+  margin: 0 0 0.125rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.cv-subtitle {
+  margin: 0 0 0.75rem;
+  font-size: 0.75rem;
+  color: var(--cv-muted);
+}
+
+.cv-summary {
+  margin: 0 0 0.75rem;
+  max-width: 42rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--cv-muted);
+}
+
+.cv-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem 0.625rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.6875rem;
+  color: var(--cv-muted);
+}
+
+.cv-contact a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cv-contact a:hover {
+  color: #fff;
+}
+
+.cv-body {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .cv-body {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.45fr);
+    gap: 1.5rem;
+    padding: 1.25rem 2rem 1.5rem;
+  }
+}
+
+.cv-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: var(--cv-surface);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.cv-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.cv-section {
+  break-inside: avoid;
+}
+
+.cv-block-title {
+  color: #00d4ff;
+}
+
+.cv-skill-label {
+  margin: 0 0 0.125rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.cv-skill-list,
+.cv-muted,
+.cv-note,
+.cv-lang-list li {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--cv-muted);
+}
+
+.cv-strong {
+  font-weight: 600;
+  color: #fff;
+}
+
+.cv-accent {
+  color: #00d4ff;
+  font-weight: 600;
+}
+
+.cv-cert-name {
+  margin: 0 0 0.125rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.cv-toeic-scores {
+  margin: 0.25rem 0 0.375rem;
+  padding: 0;
+  list-style: none;
+}
+
+.cv-toeic-scores li {
+  font-size: 0.6875rem;
+  line-height: 1.4;
+}
+
+.cv-lang-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cv-lang-list li + li {
+  margin-top: 0.375rem;
+}
+
+.cv-exp-list,
+.cv-edu-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cv-entry,
+.cv-edu-item {
+  padding-left: 0.75rem;
+  border-left: 2px solid rgba(62, 63, 240, 0.45);
+}
+
+.cv-entry + .cv-entry,
+.cv-edu-item + .cv-edu-item {
+  margin-top: 0.875rem;
+}
+
+.cv-entry-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 0.75rem;
+  margin-bottom: 0.125rem;
+}
+
+.cv-entry-company {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #fff;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.cv-date {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #00d4ff;
+  flex: 0 1 auto;
+  max-width: 100%;
+}
+
+.cv-entry-role {
+  margin: 0 0 0.375rem;
+  font-size: 0.75rem;
+  color: #ff00e5;
+  word-break: break-word;
+}
+
+.cv-project {
+  font-family: ui-monospace, monospace;
+  font-size: 0.6875rem;
+  color: #00d4ff;
+}
+
+.cv-bullets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cv-bullets li {
+  position: relative;
+  padding-left: 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--cv-muted);
+}
+
+.cv-bullets li + li {
+  margin-top: 0.2rem;
+}
+
+.cv-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--cv-primary);
+}
+
+.cv-bullets-compact li + li {
+  margin-top: 0.125rem;
+}
+
+/* ——— Impression PDF A4 ——— */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm;
+  }
+
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    background-image: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Fond du site — masquer orbes et dégradés */
+  .site-gradient-bg,
+  .no-print,
+  nav,
+  footer {
+    display: none !important;
+  }
+
+  main,
+  .cv-print-area,
+  .cv-print-area > div {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    background-image: none !important;
+    overflow: visible !important;
+  }
+
+  .cv-document {
+    --cv-text: #1a1a2e;
+    --cv-muted: #4b4b6b;
+    --cv-bg: #fff;
+    --cv-surface: #f6f5ff;
+
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    font-size: 9.5pt !important;
+    line-height: 1.35 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .cv-header {
+    padding: 0 0 4mm !important;
+    margin-bottom: 4mm !important;
+    border-bottom: 2px solid var(--cv-primary) !important;
+    background: linear-gradient(
+      90deg,
+      rgba(62, 63, 240, 0.1) 0%,
+      rgba(255, 0, 229, 0.05) 55%,
+      transparent 100%
+    ) !important;
+  }
+
+  .cv-header-bg {
+    display: none !important;
+  }
+
+  .cv-kicker {
+    color: var(--cv-secondary) !important;
+    font-size: 7.5pt !important;
+    margin-bottom: 1.5mm !important;
+  }
+
+  .cv-name {
+    font-size: 20pt !important;
+    color: var(--cv-secondary) !important;
+    -webkit-text-fill-color: var(--cv-secondary) !important;
+    background: none !important;
+    filter: none !important;
+  }
+
+  .cv-title {
+    font-size: 11pt !important;
+    color: var(--cv-text) !important;
+  }
+
+  .cv-subtitle {
+    font-size: 9pt !important;
+    margin-bottom: 2mm !important;
+    color: var(--cv-muted) !important;
+  }
+
+  .cv-summary {
+    font-size: 9pt !important;
+    margin-bottom: 2.5mm !important;
+    color: var(--cv-muted) !important;
+    max-width: none !important;
+  }
+
+  .cv-contact {
+    font-size: 8pt !important;
+    line-height: 1.4 !important;
+    color: var(--cv-muted) !important;
+  }
+
+  .cv-contact a {
+    color: var(--cv-secondary) !important;
+  }
+
+  .cv-body {
+    display: grid !important;
+    grid-template-columns: minmax(0, 34%) minmax(0, 66%) !important;
+    gap: 5mm !important;
+    padding: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .cv-sidebar,
+  .cv-main {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    gap: 3.5mm !important;
+  }
+
+  .cv-sidebar {
+    padding: 3.5mm !important;
+    border: 1px solid rgba(62, 63, 240, 0.18) !important;
+    border-radius: 2mm !important;
+    background: var(--cv-surface) !important;
+  }
+
+  .cv-section {
+    margin-bottom: 3.5mm !important;
+    break-inside: avoid !important;
+  }
+
+  .cv-block-title {
+    font-size: 8pt !important;
+    margin-bottom: 2mm !important;
+    padding-bottom: 0.75mm !important;
+    color: var(--cv-primary) !important;
+    border-bottom-color: rgba(62, 63, 240, 0.3) !important;
+  }
+
+  .cv-block-icon {
+    color: var(--cv-primary) !important;
+  }
+
+  .cv-skill-label {
+    font-size: 7.5pt !important;
+    color: var(--cv-secondary) !important;
+  }
+
+  .cv-skill-list,
+  .cv-muted,
+  .cv-note,
+  .cv-bullets li,
+  .cv-lang-list li {
+    font-size: 8.5pt !important;
+    line-height: 1.35 !important;
+    color: var(--cv-muted) !important;
+  }
+
+  .cv-cert-name {
+    color: var(--cv-text) !important;
+    font-size: 8.5pt !important;
+  }
+
+  .cv-toeic-scores li {
+    font-size: 8pt !important;
+    color: var(--cv-muted) !important;
+  }
+
+  .cv-strong,
+  .cv-entry-company,
+  .cv-cert-name {
+    color: var(--cv-text) !important;
+  }
+
+  .cv-entry-company {
+    font-size: 9.5pt !important;
+    width: 100% !important;
+  }
+
+  .cv-accent,
+  .cv-date,
+  .cv-project {
+    color: var(--cv-sky) !important;
+  }
+
+  .cv-entry-head {
+    display: block !important;
+    margin-bottom: 1mm !important;
+  }
+
+  .cv-date {
+    display: block !important;
+    margin-top: 0.5mm !important;
+    font-size: 8pt !important;
+    white-space: normal !important;
+    word-break: normal !important;
+  }
+
+  .cv-entry-role {
+    color: var(--cv-accent) !important;
+    font-size: 8.5pt !important;
+    margin-bottom: 1.5mm !important;
+  }
+
+  .cv-entry,
+  .cv-edu-item {
+    border-left-color: var(--cv-primary) !important;
+    padding-left: 2.5mm !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  .cv-entry + .cv-entry,
+  .cv-edu-item + .cv-edu-item {
+    margin-top: 3mm !important;
+  }
+
+  .cv-bullets li {
+    padding-left: 3mm !important;
+  }
+
+  .cv-bullets li::before {
+    background: var(--cv-primary) !important;
+    top: 0.55em !important;
+  }
+
+  .cv-bullets li + li {
+    margin-top: 1mm !important;
+  }
+}

@@ -2,26 +2,22 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
+import {
+  OUTPUT_DIR,
+  SOURCE_DIR,
+  listSourcePhotos,
+  removeOrphanWebpFiles,
+  toWebpName,
+  writePhotosManifest,
+} from "./photos-manifest.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
-const SOURCE_DIR = path.join(ROOT, "public", "images", "photo");
-const OUTPUT_DIR = path.join(SOURCE_DIR, "web");
 const FONT_PATH = path.join(ROOT, "public", "fonts", "DxSitrus-ExpandedItalic.otf");
 
 const WATERMARK_TEXT = "Romaric Cathalifaud";
 const MAX_EDGE = 1920;
 const WEBP_QUALITY = 82;
-
-function toWebpName(filename) {
-  return (
-    filename
-      .replace(/\.[^.]+$/i, "")
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "") + ".webp"
-  );
-}
 
 function buildWatermarkSvg(width, height) {
   const fontB64 = fs.readFileSync(FONT_PATH).toString("base64");
@@ -111,12 +107,11 @@ async function main() {
 
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
-  const sources = fs
-    .readdirSync(SOURCE_DIR)
-    .filter((file) => /\.(jpe?g|png)$/i.test(file));
+  const sources = listSourcePhotos();
 
   if (sources.length === 0) {
     console.log("Aucune image source dans public/images/photo/");
+    writePhotosManifest();
     return;
   }
 
@@ -124,9 +119,11 @@ async function main() {
 
   let totalIn = 0;
   let totalOut = 0;
+  const results = [];
 
   for (const filename of sources) {
     const result = await optimizePhoto(filename);
+    results.push(result);
     totalIn += result.inputSize;
     totalOut += result.outputSize;
     const ratio = ((1 - result.outputSize / result.inputSize) * 100).toFixed(0);
@@ -135,9 +132,17 @@ async function main() {
     );
   }
 
+  const removed = removeOrphanWebpFiles();
+  const manifest = writePhotosManifest(results);
+
   console.log(
     `\nTotal : ${(totalIn / 1024 / 1024).toFixed(1)} Mo → ${(totalOut / 1024 / 1024).toFixed(1)} Mo`
   );
+  console.log(`Galerie mise à jour : ${manifest.count} photo(s) dans photos.manifest.json`);
+
+  if (removed.length > 0) {
+    console.log(`WebP orphelins supprimés : ${removed.join(", ")}`);
+  }
 }
 
 main().catch((error) => {

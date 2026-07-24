@@ -43,13 +43,13 @@ export function Tilt3D({ children, className = "", intensity = 10 }: Tilt3DProps
   };
 
   if (isMobile) {
-    return <div className={`relative ${className}`}>{children}</div>;
+    return <div className={`relative h-full ${className}`}>{children}</div>;
   }
 
   return (
     <div
       ref={ref}
-      className={`relative ${className}`}
+      className={`relative h-full ${className}`}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       style={{
@@ -58,7 +58,7 @@ export function Tilt3D({ children, className = "", intensity = 10 }: Tilt3DProps
         transformStyle: "preserve-3d",
       }}
     >
-      <div className="relative z-[1]">{children}</div>
+      <div className="relative z-[1] h-full">{children}</div>
       <div
         className="pointer-events-none absolute inset-0 z-0 rounded-2xl transition-opacity duration-300"
         style={{

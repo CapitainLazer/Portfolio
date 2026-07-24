@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "node scripts/sync-photos-manifest.mjs && next build",
+    "start": "npx --yes serve out",
     "lint": "eslint",
-    "optimize-photos": "node scripts/optimize-photos.mjs"
+    "optimize-photos": "node scripts/optimize-photos.mjs",
+    "sync-photos": "node scripts/sync-photos-manifest.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
