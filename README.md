@@ -113,6 +113,7 @@ public/images/photo/
 | `/cv` | CV |
 | `/mentions-legales` | Mentions légales |
 | `/politique-de-confidentialite` | Politique de confidentialité |
+| _(404)_ | Page introuvable stylisée (`not-found.tsx` → `404.html`) |
 
 ## Licence
 

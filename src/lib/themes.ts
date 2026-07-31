@@ -1,6 +1,6 @@
 import type { ProjectCategory } from "./types";
 
-export type ThemeId = "default" | "dev" | "design" | "photo";
+export type ThemeId = "default" | "dev" | "design" | "photo" | "notfound";
 
 export interface SiteTheme {
   id: ThemeId;
@@ -40,6 +40,21 @@ export const themes: Record<ThemeId, SiteTheme> = {
     orb3: "#201881",
     gradientMain: "linear-gradient(135deg, #3e3ff0 0%, #ff00e5 50%, #201881 100%)",
     gradientHero: "linear-gradient(180deg, rgba(32, 24, 129, 0.66) 0%, rgba(32, 24, 129, 0) 100%)",
+  },
+  notfound: {
+    id: "notfound",
+    label: "404",
+    primary: "#ef4444",
+    secondary: "#7f1d1d",
+    accent: "#fb7185",
+    sky: "#fca5a5",
+    // Orbes de fond plus lumineux (comme les pages travaux, en rouge)
+    orb1: "#f87171",
+    orb2: "#ef4444",
+    orb3: "#e11d48",
+    gradientMain: "linear-gradient(135deg, #ef4444 0%, #f43f5e 45%, #9f1239 100%)",
+    gradientHero:
+      "linear-gradient(180deg, rgba(127, 29, 29, 0.35) 0%, rgba(8, 5, 26, 0) 100%)",
   },
   dev: {
     id: "dev",

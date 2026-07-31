@@ -6,33 +6,51 @@ import { Float, MeshDistortMaterial, Sparkles } from "@react-three/drei";
 import * as THREE from "three";
 import type { Group, Mesh } from "three";
 
-const COLORS = {
-  deepBlue: "#1a3fd4",
-  skyCyan: "#00d4ff",
-  electricBlue: "#3e3ff0",
-  indigo: "#201881",
-  deepNavy: "#08057d",
-  purple: "#8b3fcf",
-  magenta: "#e040a0",
-  hotPink: "#ff4da6",
-  violet: "#6b2fa0",
-};
+const PALETTES = {
+  default: {
+    deep: "#1a3fd4",
+    sky: "#00d4ff",
+    electric: "#3e3ff0",
+    indigo: "#201881",
+    navy: "#08057d",
+    purple: "#8b3fcf",
+    magenta: "#e040a0",
+    hot: "#ff4da6",
+    violet: "#6b2fa0",
+    light: "#ffffff",
+  },
+  ember: {
+    deep: "#9a3412",
+    sky: "#fb923c",
+    electric: "#ef4444",
+    indigo: "#7f1d1d",
+    navy: "#450a0a",
+    purple: "#ea580c",
+    magenta: "#f43f5e",
+    hot: "#fb7185",
+    violet: "#c2410c",
+    light: "#fff7ed",
+  },
+} as const;
+
+export type PlanetaryPalette = keyof typeof PALETTES;
 
 const CAMERA_PRESETS = {
   hero: { position: [0, 0, 7.5] as [number, number, number], fov: 62 },
   compact: { position: [0, 0, 8.2] as [number, number, number], fov: 54 },
 };
 
-function createRingGradientTexture() {
+function createRingGradientTexture(palette: PlanetaryPalette) {
+  const c = PALETTES[palette];
   const canvas = document.createElement("canvas");
   canvas.width = 512;
   canvas.height = 32;
   const ctx = canvas.getContext("2d")!;
   const gradient = ctx.createLinearGradient(0, 0, 512, 0);
-  gradient.addColorStop(0, COLORS.deepBlue);
-  gradient.addColorStop(0.35, COLORS.purple);
-  gradient.addColorStop(0.65, COLORS.magenta);
-  gradient.addColorStop(1, COLORS.hotPink);
+  gradient.addColorStop(0, c.deep);
+  gradient.addColorStop(0.35, c.purple);
+  gradient.addColorStop(0.65, c.magenta);
+  gradient.addColorStop(1, c.hot);
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, 512, 32);
   const texture = new THREE.CanvasTexture(canvas);
@@ -74,12 +92,14 @@ function GasMoon({ position, scale, color, emissive, distort = 0.2, speed = 2 }:
 interface PlanetaryClusterProps {
   mouse: { x: number; y: number };
   scale?: number;
+  palette: PlanetaryPalette;
 }
 
-function PlanetaryCluster({ mouse, scale = 1 }: PlanetaryClusterProps) {
+function PlanetaryCluster({ mouse, scale = 1, palette }: PlanetaryClusterProps) {
+  const c = PALETTES[palette];
   const groupRef = useRef<Group>(null);
   const ringRef = useRef<Mesh>(null);
-  const ringTexture = useMemo(() => createRingGradientTexture(), []);
+  const ringTexture = useMemo(() => createRingGradientTexture(palette), [palette]);
 
   useFrame((state) => {
     const t = state.clock.elapsedTime;
@@ -99,7 +119,7 @@ function PlanetaryCluster({ mouse, scale = 1 }: PlanetaryClusterProps) {
           <torusGeometry args={[2.15, 0.045, 32, 128]} />
           <meshStandardMaterial
             map={ringTexture}
-            emissive={COLORS.magenta}
+            emissive={c.magenta}
             emissiveIntensity={0.15}
             metalness={0.7}
             roughness={0.2}
@@ -113,8 +133,8 @@ function PlanetaryCluster({ mouse, scale = 1 }: PlanetaryClusterProps) {
         <mesh>
           <sphereGeometry args={[0.85, 64, 64]} />
           <MeshDistortMaterial
-            color={COLORS.purple}
-            emissive={COLORS.violet}
+            color={c.purple}
+            emissive={c.violet}
             emissiveIntensity={0.25}
             metalness={0.5}
             roughness={0.3}
@@ -130,8 +150,8 @@ function PlanetaryCluster({ mouse, scale = 1 }: PlanetaryClusterProps) {
         <mesh position={[0, 0.15, 0]} scale={[1.02, 0.72, 1.02]}>
           <sphereGeometry args={[0.88, 64, 64]} />
           <MeshDistortMaterial
-            color={COLORS.skyCyan}
-            emissive={COLORS.electricBlue}
+            color={c.sky}
+            emissive={c.electric}
             emissiveIntensity={0.4}
             metalness={0.75}
             roughness={0.15}
@@ -146,45 +166,45 @@ function PlanetaryCluster({ mouse, scale = 1 }: PlanetaryClusterProps) {
       <GasMoon
         position={[-2.6, -0.15, 0.4]}
         scale={0.38}
-        color={COLORS.violet}
-        emissive={COLORS.magenta}
+        color={c.violet}
+        emissive={c.magenta}
         distort={0.22}
       />
       <GasMoon
         position={[-0.9, 1.35, 0.35]}
         scale={0.14}
-        color={COLORS.magenta}
-        emissive={COLORS.hotPink}
+        color={c.magenta}
+        emissive={c.hot}
         distort={0.3}
         speed={3}
       />
       <GasMoon
         position={[-0.35, 1.15, 0.55]}
         scale={0.11}
-        color={COLORS.hotPink}
-        emissive={COLORS.magenta}
+        color={c.hot}
+        emissive={c.magenta}
         distort={0.35}
         speed={3.5}
       />
       <GasMoon
         position={[0.15, -1.05, -0.25]}
         scale={0.32}
-        color={COLORS.deepNavy}
-        emissive={COLORS.skyCyan}
+        color={c.navy}
+        emissive={c.sky}
         distort={0.25}
       />
       <GasMoon
         position={[1.55, -0.75, 0.25]}
         scale={0.3}
-        color={COLORS.skyCyan}
-        emissive={COLORS.electricBlue}
+        color={c.sky}
+        emissive={c.electric}
         distort={0.2}
       />
       <GasMoon
         position={[2.55, 0.15, 0.1]}
         scale={0.09}
-        color={COLORS.skyCyan}
-        emissive={COLORS.electricBlue}
+        color={c.sky}
+        emissive={c.electric}
         distort={0.4}
         speed={4}
       />
@@ -197,6 +217,8 @@ interface PlanetaryLogo3DProps {
   scale?: number;
   className?: string;
   variant?: "hero" | "compact";
+  palette?: PlanetaryPalette;
+  showSparkles?: boolean;
 }
 
 export default function PlanetaryLogo3D({
@@ -204,8 +226,11 @@ export default function PlanetaryLogo3D({
   scale = 1,
   className = "",
   variant = "hero",
+  palette = "default",
+  showSparkles = true,
 }: PlanetaryLogo3DProps) {
   const camera = CAMERA_PRESETS[variant];
+  const c = PALETTES[palette];
 
   return (
     <div className={`overflow-visible ${className}`}>
@@ -216,15 +241,17 @@ export default function PlanetaryLogo3D({
         style={{ background: "transparent", overflow: "visible" }}
       >
         <ambientLight intensity={0.3} />
-        <pointLight position={[6, 6, 8]} intensity={1.4} color={COLORS.electricBlue} />
-        <pointLight position={[-6, -3, 5]} intensity={1} color={COLORS.hotPink} />
-        <pointLight position={[0, -5, 3]} intensity={0.6} color={COLORS.purple} />
-        <directionalLight position={[4, 4, 4]} intensity={0.5} color="#ffffff" />
-        <PlanetaryCluster mouse={mouse} scale={scale} />
-        <Sparkles count={40} scale={10} size={2} speed={0.2} color={COLORS.magenta} opacity={0.5} />
+        <pointLight position={[6, 6, 8]} intensity={1.4} color={c.electric} />
+        <pointLight position={[-6, -3, 5]} intensity={1} color={c.hot} />
+        <pointLight position={[0, -5, 3]} intensity={0.6} color={c.purple} />
+        <directionalLight position={[4, 4, 4]} intensity={0.5} color={c.light} />
+        <PlanetaryCluster mouse={mouse} scale={scale} palette={palette} />
+        {showSparkles && (
+          <Sparkles count={40} scale={10} size={2} speed={0.2} color={c.magenta} opacity={0.5} />
+        )}
       </Canvas>
     </div>
   );
 }
 
-export { COLORS as planetaryColors };
+export { PALETTES as planetaryPalettes };
