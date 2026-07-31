@@ -64,9 +64,25 @@ Le workflow `.github/workflows/deploy-pages.yml` construit et publie le dossier 
 Sans domaine perso pour l’instant (cas actuel) :
 
 - URL : `https://CapitainLazer.github.io/Portfolio/`
-- Le workflow utilise déjà `NEXT_PUBLIC_BASE_PATH=/Portfolio` (obligatoire pour le CSS/JS)
+- Le workflow utilise déjà `NEXT_PUBLIC_BASE_PATH=/Portfolio` (obligatoire pour CSS/JS/assets)
 
 Quand le DNS du domaine perso est prêt : retirer `NEXT_PUBLIC_BASE_PATH`, remettre `NEXT_PUBLIC_SITE_URL` sur le domaine, et ajouter `public/CNAME` avec le nom de domaine.
+
+### Règle `basePath` (critique)
+
+Le site est servi sous `/Portfolio`, pas à la racine. Tout chemin absolu `/…` qui **n’est pas** géré par Next (`Link`, `next/font`, …) doit passer par `withBasePath()` (`src/lib/paths.ts`).
+
+| Type | OK sans helper ? | Action |
+|------|------------------|--------|
+| `next/link` (`<Link href="/cv">`) | Oui | Next préfixe |
+| `next/font` (local/google) | Oui | URLs générées correctement |
+| CSS/JS `_next/static` | Oui | via `assetPrefix` |
+| `next/image` / `<img>` vers `/images/…` | **Non** (export) | `withBasePath()` |
+| `@font-face url("/fonts/…")` | **Non** | préférer `next/font/local` |
+| `<a href="/cv">` brut | **Non** | utiliser `<Link>` ou `withBasePath()` |
+| SEO `absoluteUrl()` | Oui si `NEXT_PUBLIC_SITE_URL` inclut déjà `/Portfolio` | garder SITE_URL cohérent |
+
+Helper : `import { withBasePath } from "@/lib/paths"`.
 
 ## Photos
 

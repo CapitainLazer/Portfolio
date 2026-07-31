@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Printer } from "lucide-react";
 
 type CvDownloadButtonProps = {
@@ -21,12 +22,12 @@ export function CvDownloadButton({
   className = "",
 }: CvDownloadButtonProps) {
   return (
-    <a
+    <Link
       href="/cv"
       className={`inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-semibold transition-all sm:w-auto ${variants[variant]} ${className}`}
     >
       <Printer className="h-4 w-4" />
       Voir mon CV
-    </a>
+    </Link>
   );
 }
