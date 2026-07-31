@@ -1,8 +1,8 @@
 # Polices DX Sitrus
 
-Fichiers installés depuis l'archive WordPress :
+Fichiers sources dans `src/fonts/` (chargés via `next/font/local` pour respecter le `basePath` GitHub Pages) :
 
 - `DxSitrus-Expanded.otf` — regular
-- `DxSitrus-ExpandedItalic.otf` — italic (utilisée pour les titres du hero)
+- `DxSitrus-ExpandedItalic.otf` — italic (titres / filigrane)
 
-Référencées dans `src/app/globals.css`.
+Ce dossier `public/fonts/` peut rester vide ou servir de miroir local ; la version en ligne utilise les fichiers sous `src/fonts/`.

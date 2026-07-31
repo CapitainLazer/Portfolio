@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import { Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeScope } from "@/components/layout/ThemeScope";
@@ -7,6 +8,23 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { rootMetadata } from "@/lib/seo";
+
+const dxSitrus = localFont({
+  src: [
+    {
+      path: "../fonts/DxSitrus-Expanded.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/DxSitrus-ExpandedItalic.otf",
+      weight: "400",
+      style: "italic",
+    },
+  ],
+  variable: "--font-dx-sitrus",
+  display: "swap",
+});
 
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
@@ -31,7 +49,7 @@ export default function RootLayout({
     <html
       lang="fr"
       data-scroll-behavior="smooth"
-      className={`${instrumentSerif.variable} ${plusJakarta.variable} h-full`}
+      className={`${dxSitrus.variable} ${instrumentSerif.variable} ${plusJakarta.variable} h-full`}
     >
       <body className="min-h-full antialiased">
         <JsonLd />

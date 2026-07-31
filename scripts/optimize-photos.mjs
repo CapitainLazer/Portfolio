@@ -13,7 +13,7 @@ import {
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
-const FONT_PATH = path.join(ROOT, "public", "fonts", "DxSitrus-ExpandedItalic.otf");
+const FONT_PATH = path.join(ROOT, "src", "fonts", "DxSitrus-ExpandedItalic.otf");
 
 const WATERMARK_TEXT = "Romaric Cathalifaud";
 const MAX_EDGE = 1920;

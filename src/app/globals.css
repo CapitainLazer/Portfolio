@@ -1,22 +1,5 @@
 @import "tailwindcss";
 
-/* DX Sitrus — polices extraites de l'archive WordPress */
-@font-face {
-  font-family: "DX Sitrus";
-  src: url("/fonts/DxSitrus-Expanded.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DX Sitrus";
-  src: url("/fonts/DxSitrus-ExpandedItalic.otf") format("opentype");
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
 :root {
   /* Palette inspirée de romaric-cathalifaud-portfolio.fr */
   --color-primary: #3e3ff0;
@@ -61,7 +44,7 @@
 @theme inline {
   --color-background: var(--color-bg);
   --color-foreground: var(--color-text);
-  --font-display: "DX Sitrus", var(--font-instrument-serif), Georgia, serif;
+  --font-display: var(--font-dx-sitrus), var(--font-instrument-serif), Georgia, serif;
   --font-body: var(--font-plus-jakarta), system-ui, sans-serif;
 }
 
