@@ -41,7 +41,7 @@ export const cvProfile = {
 };
 
 export const cvSummary =
-  "Étudiant en BUT MMI (3ᵉ année), orienté développement front-end, design d'interface et photographie. Stage chez ISAC Ingénierie sur le projet isac-ingenierie ; expérience CNRS sur WordPress, Three.js, Symfony et Next.js.";
+  "Diplômé du BUT MMI, orienté développement front-end, design d'interface et photographie. Stage chez ISAC Ingénierie sur le projet isac-ingenierie ; expérience CNRS sur WordPress, Three.js, Symfony et Next.js.";
 
 export const cvSkillGroups = [
   {
@@ -94,10 +94,10 @@ export const cvExperiences: CvExperience[] = [
 
 export const cvEducation: CvEducation[] = [
   {
-    period: "2023 — Aujourd'hui",
-    title: "BUT Métiers du Multimédia et de l'Internet — 3ᵉ année",
+    period: "2023 — 2026",
+    title: "BUT Métiers du Multimédia et de l'Internet",
     school: "Université Clermont Auvergne",
-    detail: "Niveau DUT (Bac +2)",
+    detail: "Diplômé · Bac +3",
     items: ["Site web avec base de données", "Projets front-end, CMS et design web"],
   },
   {
